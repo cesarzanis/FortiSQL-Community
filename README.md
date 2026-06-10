@@ -17,20 +17,24 @@
 
 O FortiSQL roda como um agente na bandeja do sistema (system tray), executando ciclos de manutenção de forma autônoma. Não depende do SQL Server Agent, perfeito para **SQL Server Express**.
 
-```
-┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│  📅 Agenda   │────▶│  💾 Backup   │────▶│  📦 Compacta │────▶│  ☁️ Nuvem    │
-│  Visual      │     │  FULL/DIFF   │     │  7z (.7z)    │     │  Drive/OneDrive
-│  por horário │     │  LOG (15min) │     │  até 90%     │     │  Dropbox     │
-└─────────────┘     └──────────────┘     │  menor       │     └──────────────┘
-                                          └──────────────┘
-       │                                                              │
-       ▼                                                              ▼
-┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│  🔍 CHECKDB │────▶│  📊 Índices  │────▶│  📧 Alertas  │────▶│  📋 Relatório│
-│  Integridade│     │  Estatísticas│     │  Email       │     │  de Saúde    │
-│  Física     │     │  Rebuild     │     │  Telegram    │     │  HTML        │
-└─────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+```mermaid
+flowchart LR
+    A["Agenda Visual"] --> B["Backup\nFULL / DIFF / LOG"]
+    B --> C["Compactação\n7z - até 90% menor"]
+    C --> D["Nuvem\nDrive / OneDrive"]
+    A --> E["CHECKDB\nIntegridade Física"]
+    E --> F["Índices\nReorganiza / Rebuild"]
+    F --> G["Alertas\nEmail + Telegram"]
+    G --> H["Relatório\nde Saúde HTML"]
+
+    style A fill:#1a1a2e,stroke:#C9B07A,color:#fff
+    style B fill:#1a1a2e,stroke:#60a5fa,color:#fff
+    style C fill:#1a1a2e,stroke:#f59e0b,color:#fff
+    style D fill:#1a1a2e,stroke:#22c55e,color:#fff
+    style E fill:#1a1a2e,stroke:#ef4444,color:#fff
+    style F fill:#1a1a2e,stroke:#a78bfa,color:#fff
+    style G fill:#1a1a2e,stroke:#f97316,color:#fff
+    style H fill:#1a1a2e,stroke:#C9B07A,color:#fff
 ```
 
 ## Instalação
