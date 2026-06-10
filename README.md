@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/cesarzanis/FortiSQL-Community?color=C9B07A&label=Versao)](https://github.com/cesarzanis/FortiSQL-Community/releases/latest)
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows)](https://github.com/cesarzanis/FortiSQL-Community)
-[![Consultoria](https://img.shields.io/badge/Consultoria-Czanix-blue?color=C9B07A)](https://czanix.com/database-consultoria.html)
+[![Consultoria](https://img.shields.io/badge/Consultoria-Czanix-blue?color=C9B07A)](https://czanix.com/pt/dados-bi)
 
 Solução para automação de rotinas de backup, verificação de integridade (CHECKDB) e otimização de performance para Microsoft SQL Server. Ele integra a solução de manutenção do Ola Hallengren com um motor de pós-processamento, compactação em 7z e sincronização em nuvem, tudo configurado por uma interface gráfica simples e moderna.
 
@@ -54,4 +54,4 @@ Consideramos as rotinas desenvolvidas por Ola como as melhores do mundo para a m
 Este projeto é disponibilizado sob o modelo Freemium pela Czanix Engineering. A edição Community é gratuita para uso pessoal ou avaliação.
 
 Para suporte oficial, auditorias de banco de dados ou consultoria de infraestrutura SQL Server, acesse o site:
-[Czanix Engineering - Consultoria de Banco de Dados](https://czanix.com/database-consultoria.html)
+[Czanix Engineering - Consultoria de Banco de Dados](https://czanix.com/pt/dados-bi)
