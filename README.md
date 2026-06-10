@@ -32,7 +32,7 @@ Solução para automação de rotinas de backup, verificação de integridade (C
 ## Como Instalar
 
 1. Vá na aba de [Releases](https://github.com/cesarzanis/FortiSQL-Community/releases/latest) deste repositório.
-2. Baixe o instalador mais recente: `FortiSQL_Setup_v2.2.0.exe`.
+2. Baixe o instalador mais recente: `FortiSQL_Setup_v2.2.1.exe`.
 3. Execute o instalador no servidor Windows e siga as etapas do assistente.
 4. Configure as credenciais do SQL Server (Windows Auth ou SQL Auth), ajuste os diretórios e configure os alertas por Telegram ou E-mail.
 5. Salve e aplique. O agente ficará rodando na bandeja do sistema monitorando as rotinas de forma autônoma.
