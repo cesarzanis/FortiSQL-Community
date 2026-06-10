@@ -1,57 +1,104 @@
-# FortiSQL Ops - Community Edition
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/cesarzanis/FortiSQL-Community?color=C9B07A&label=Versão&style=for-the-badge" alt="Release" />
+  <img src="https://img.shields.io/badge/Windows-Server%20%7C%20Desktop-0078D6?style=for-the-badge&logo=windows" alt="Platform" />
+  <img src="https://img.shields.io/badge/SQL%20Server-Express%20→%20Enterprise-CC2927?style=for-the-badge&logo=microsoftsqlserver" alt="SQL Server" />
+  <a href="https://czanix.com/pt/dados-bi"><img src="https://img.shields.io/badge/Czanix-Engineering-C9B07A?style=for-the-badge" alt="Czanix" /></a>
+</p>
 
-[![Release](https://img.shields.io/github/v/release/cesarzanis/FortiSQL-Community?color=C9B07A&label=Versao)](https://github.com/cesarzanis/FortiSQL-Community/releases/latest)
-[![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows)](https://github.com/cesarzanis/FortiSQL-Community)
-[![Consultoria](https://img.shields.io/badge/Consultoria-Czanix-blue?color=C9B07A)](https://czanix.com/pt/dados-bi)
+<h1 align="center">🛡️ FortiSQL Ops</h1>
+<p align="center">
+  <strong>Agente inteligente de manutenção para Microsoft SQL Server.</strong><br/>
+  Backups automatizados · Integridade (CHECKDB) · Compactação 7z · Nuvem · Alertas
+</p>
 
-Solução para automação de rotinas de backup, verificação de integridade (CHECKDB) e otimização de performance para Microsoft SQL Server. Ele integra a solução de manutenção do Ola Hallengren com um motor de pós-processamento, compactação em 7z e sincronização em nuvem, tudo configurado por uma interface gráfica simples e moderna.
+---
 
-## Principais Recursos
+## Como Funciona
 
-### 1. Automação de Backup (FULL, DIFF e LOG)
-* **Agendamento Visual**: Interface gráfica linha a linha para definir horários de backup com snapping automático a minutos válidos (:00, :15, :30, :45).
-* **Backups Diferenciais (DIFF)**: Realização automatizada de backups diferenciais inteligentes com base na data do último backup de dados.
-* **Backup de Transações (LOG)**: Rotina automatizada a cada 15 minutos para bancos em modelo de recuperação FULL ou BULK_LOGGED.
-* **Proteção contra Duplicação**: Janela de segurança de 5 minutos para evitar backups concorrentes.
+O FortiSQL roda como um agente na bandeja do sistema (system tray), executando ciclos de manutenção de forma autônoma. Não depende do SQL Server Agent, perfeito para **SQL Server Express**.
 
-### 2. Otimização & Integridade
-* **Otimização de Índices e Estatísticas**: Reorganização ou reconstrução de índices e atualização de estatísticas integrada no pós-backup (marcado na própria linha de horário).
-* **Validação de Integridade (CHECKDB)**: Verificação automática de integridade física e lógica dos arquivos de banco de dados (DBCC CHECKDB) para detecção de corrupções, com suporte a Physical Only, No Index, TabLock e Extended Checks.
-* **Suporte a Azure SQL**: Ignora automaticamente backups e checagens estruturais para bancos gerenciados nativamente na nuvem (Azure SQL).
+```
+┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  📅 Agenda   │────▶│  💾 Backup   │────▶│  📦 Compacta │────▶│  ☁️ Nuvem    │
+│  Visual      │     │  FULL/DIFF   │     │  7z (.7z)    │     │  Drive/OneDrive
+│  por horário │     │  LOG (15min) │     │  até 90%     │     │  Dropbox     │
+└─────────────┘     └──────────────┘     │  menor       │     └──────────────┘
+                                          └──────────────┘
+       │                                                              │
+       ▼                                                              ▼
+┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  🔍 CHECKDB │────▶│  📊 Índices  │────▶│  📧 Alertas  │────▶│  📋 Relatório│
+│  Integridade│     │  Estatísticas│     │  Email       │     │  de Saúde    │
+│  Física     │     │  Rebuild     │     │  Telegram    │     │  HTML        │
+└─────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+```
 
-### 3. Compactação e Sincronização em Nuvem (Cloud Sync)
-* **Compactação**: Compressão automática dos backups em arquivos .7z de alta eficiência de espaço (usando ferramenta 7-Zip embarcada).
-* **Sincronização Cloud**: Cópia automática dos arquivos para pastas locais sincronizadas com a nuvem (Google Drive, OneDrive, Dropbox, etc.).
-* **Limpeza Inteligente (Retention)**: Políticas de retenção local e em nuvem independentes. Limpeza automatizada de arquivos antigos se o espaço em disco atingir níveis críticos (smart reclamation).
+## Instalação
 
-### 4. Relatórios e Alertas
-* **Relatório de Saúde**: Geração de um relatório de saúde em formato HTML traduzido em linguagem comercial/negocial, facilitando o acompanhamento por gestores que não têm conhecimento técnico profundo.
-* **Histórico de Operações**: Histórico detalhado de comandos SQL executados com indicação de duração real (tarefas rápidas formatadas como < 1s).
-* **Alertas**: Envio de relatórios visuais HTML para e-mails configurados (SMTP/TLS) e alertas curtos via Telegram.
+<a href="https://github.com/cesarzanis/FortiSQL-Community/releases/latest/download/FortiSQL_Setup.exe">
+  <img src="https://img.shields.io/badge/⬇️_Baixar_FortiSQL-Instalador_Windows-C9B07A?style=for-the-badge&logoColor=white" alt="Download" />
+</a>
 
-## Como Instalar
+1. Clique no botão acima para baixar o instalador (sempre a versão mais recente).
+2. Execute no servidor Windows e siga o assistente.
+3. Configure a conexão SQL Server (Windows Auth ou SQL Auth).
+4. Defina os diretórios de backup e horários desejados.
+5. Salve e aplique. O agente começa a rodar automaticamente na bandeja do sistema.
 
-1. Vá na aba de [Releases](https://github.com/cesarzanis/FortiSQL-Community/releases/latest) deste repositório.
-2. Baixe o instalador mais recente: `FortiSQL_Setup_v2.2.1.exe`.
-3. Execute o instalador no servidor Windows e siga as etapas do assistente.
-4. Configure as credenciais do SQL Server (Windows Auth ou SQL Auth), ajuste os diretórios e configure os alertas por Telegram ou E-mail.
-5. Salve e aplique. O agente ficará rodando na bandeja do sistema monitorando as rotinas de forma autônoma.
+> 💡 **Dica**: Aponte o diretório de nuvem para a pasta local do Google Drive, OneDrive ou Dropbox. O FortiSQL copia os backups para lá e o app da nuvem faz o upload. Esses serviços guardam histórico de versões (últimos 30 dias/100 versões), garantindo proteção extra.
 
-## Requisitos do Sistema
+## Recursos
 
-* **SO**: Windows Server 2012 R2 ou superior / Windows 10 ou superior (64-bit).
-* **Banco de Dados**: Microsoft SQL Server 2012 ou superior (todas as edições, incluindo SQL Server Express, Web, Standard e Enterprise).
-* **Acesso**: Permissões administrativas para instalação do serviço e login do agente no SQL Server com acesso de leitura/gravação aos bancos de dados a serem processados.
+### 💾 Backup Inteligente
+| Recurso | Descrição |
+|---------|-----------|
+| **FULL** | Agendamento visual por horário com snapping automático (:00, :15, :30, :45) |
+| **DIFF** | Diferenciais automáticos baseados na data do último backup de dados |
+| **LOG** | A cada 15 minutos para bancos em FULL ou BULK_LOGGED |
+| **Anti-duplicação** | Janela de segurança de 5 min para evitar backups concorrentes |
 
-## Créditos e Honestidade Técnica
+### 🔍 Integridade e Otimização
+| Recurso | Descrição |
+|---------|-----------|
+| **CHECKDB** | Verificação automática de integridade física e lógica (DBCC CHECKDB) |
+| **Índices** | Reorganização ou reconstrução inteligente de índices fragmentados |
+| **Estatísticas** | Atualização automática integrada no pós-backup |
+| **Azure SQL** | Ignora automaticamente operações não suportadas em bancos gerenciados |
 
-Por questão de honestidade intelectual e transparência técnica, com o objetivo de manter o projeto 100% correto com a comunidade, o motor de backup, integridade e otimização de índices do FortiSQL utiliza as rotinas de **Ola Hallengren** (disponíveis em [olahallengren.com](https://olahallengren.com)).
+### 📦 Compactação e Nuvem
+| Recurso | Descrição |
+|---------|-----------|
+| **7z** | Compressão de alta eficiência (7-Zip embarcado, até 90% de redução) |
+| **Cloud Sync** | Cópia automática para Google Drive, OneDrive, Dropbox |
+| **Retenção** | Políticas independentes para local e nuvem com limpeza inteligente |
 
-Consideramos as rotinas desenvolvidas por Ola como as melhores do mundo para a manutenção de SQL Server. Em vez de criar scripts novos e menos validados, o FortiSQL orquestra essa engenharia consolidada em uma interface gráfica simples, acrescentando agendamento visual, compactação em 7z, sincronização em nuvem e alertas por e-mail e Telegram.
+### 📧 Alertas e Relatórios
+| Recurso | Descrição |
+|---------|-----------|
+| **Email** | Relatórios visuais HTML via SMTP/TLS |
+| **Telegram** | Alertas instantâneos no seu celular |
+| **Relatório de Saúde** | HTML em linguagem de negócio, acessível para gestores não técnicos |
 
-## Licença & Suporte
+## Requisitos
 
-Este projeto é disponibilizado sob o modelo Freemium pela Czanix Engineering. A edição Community é gratuita para uso pessoal ou avaliação.
+| Requisito | Mínimo |
+|-----------|--------|
+| **Sistema Operacional** | Windows Server 2012 R2+ / Windows 10+ (64-bit) |
+| **SQL Server** | 2012 ou superior (Express, Web, Standard, Enterprise) |
+| **Permissões** | Administrador local + login SQL com acesso aos bancos |
 
-Para suporte oficial, auditorias de banco de dados ou consultoria de infraestrutura SQL Server, acesse o site:
-[Czanix Engineering - Consultoria de Banco de Dados](https://czanix.com/pt/dados-bi)
+## Motor de Manutenção
+
+O FortiSQL utiliza as rotinas de **[Ola Hallengren](https://olahallengren.com)** como motor de backup, integridade e otimização de índices. São amplamente reconhecidas como referência mundial para manutenção de SQL Server, utilizadas por milhares de empresas e recomendadas pela própria Microsoft.
+
+O FortiSQL orquestra essas rotinas consolidadas em uma interface gráfica moderna, acrescentando: agendamento visual, compactação 7z, sincronização em nuvem, alertas por email/Telegram e relatórios de saúde automatizados.
+
+## Licença e Suporte
+
+Este projeto é disponibilizado sob o modelo **Freemium** pela [Czanix Engineering](https://czanix.com). A edição Community é gratuita.
+
+Para suporte oficial, consultoria SQL Server ou auditoria de banco de dados:
+
+<a href="https://czanix.com/pt/dados-bi">
+  <img src="https://img.shields.io/badge/Czanix-Consultoria_SQL_Server-C9B07A?style=for-the-badge" alt="Consultoria" />
+</a>
